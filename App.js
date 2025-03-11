@@ -57,13 +57,13 @@ const RaspberryPiControl = () =>
         const response = await fetch(`${BASE_URL}/detection_status`);
         const data = await response.json();
         // Eğer bus tespit edilmişse ve alert daha önce gösterilmemişse
-        if (data.bus_detected && !alertShown)
+        if (data.hayalet_detected && !alertShown)
         {
-          Alert.alert("Uyarı", "Bus tespit edildi!");
+          Alert.alert("Uyarı", "Hayalet ağ tespit edildi!");
           setAlertShown(true);
         }
         // Bus tespiti kalmadığında alert durumunu sıfırla
-        if (!data.bus_detected && alertShown)
+        if (!data.hayalet_detected && alertShown)
         {
           setAlertShown(false);
         }
