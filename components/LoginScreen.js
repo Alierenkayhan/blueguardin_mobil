@@ -20,30 +20,28 @@ const LoginScreen = ({ navigation }) =>
         }
         try
         {
-            const formData = new FormData();
-            formData.append('username', username);
-            formData.append('password', password);
-
             const response = await fetch(`${BASE_URL}/login`, {
                 method: 'POST',
-                body: formData,
-                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
             });
-            console.log(response);
-            if (response.redirected || response.ok)
+            const data = await response.json();
+            if (response.ok)
             {
+                Alert.alert('Başarılı', data.message || 'Giriş başarılı.');
                 signIn({ username });
-                navigation.navigate('Home'); // Home ekranına geçiş yapılıyor
+                navigation.navigate('Home');
             } else
             {
-                Alert.alert('Giriş Hatası', 'Kullanıcı adı veya şifre yanlış.');
+                Alert.alert('Giriş Hatası', data.error || 'Kullanıcı adı veya şifre yanlış.');
             }
         } catch (error)
         {
             Alert.alert('Giriş Hatası', 'Sunucuya bağlanılamadı.');
         }
     };
-
 
     return (
         <KeyboardAvoidingView style={styles.authContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>

@@ -111,7 +111,6 @@ const RaspberryPiControl = ({ navigation }) =>
         return R * c;
     };
 
-    // Eğer cihaz hotspot sağlayıcı ise konum bilgisini sunucuya gönder
     useEffect(() =>
     {
         if (isHotspot && deviceLocation)
@@ -136,7 +135,6 @@ const RaspberryPiControl = ({ navigation }) =>
         }
     }, [isHotspot, deviceLocation]);
 
-    // Hotspot sağlamayan cihazlarda hotspot bilgisini al
     useEffect(() =>
     {
         if (!isHotspot)
@@ -178,7 +176,6 @@ const RaspberryPiControl = ({ navigation }) =>
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            {/* Header - Logo ve Başlık */}
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>Raspberry Pi Kontrol</Text>
             </View>
@@ -242,7 +239,6 @@ const RaspberryPiControl = ({ navigation }) =>
                     )}
                 </View>
             </View>
-            {/* Çıkış Butonu */}
             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
                 <Text style={styles.logoutButtonText}>Çıkış Yap</Text>
             </TouchableOpacity>

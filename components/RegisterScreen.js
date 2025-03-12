@@ -36,25 +36,17 @@ const RegisterScreen = ({ navigation }) =>
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                }),
+                body: JSON.stringify({ username, password }),
             });
 
+            const data = await response.json();
             if (response.ok)
             {
-                Alert.alert('Başarılı', 'Kayıt başarılı, artık giriş yapabilirsiniz.');
+                Alert.alert('Başarılı', data.message || 'Kayıt başarılı, artık giriş yapabilirsiniz.');
                 navigation.navigate('Login');
-            } else if (response.status === 409)
-            {
-                Alert.alert('Kayıt Hatası', 'Bilinmeyen bir hata oluştu.');
-            } else if (response.status === 400)
-            {
-                Alert.alert('Kayıt Hatası', 'Kullanıcı adı veya şifre zaten alınmış.');
             } else
             {
-                Alert.alert('Kayıt Hatası', 'Bilinmeyen bir hata oluştu.');
+                Alert.alert('Kayıt Hatası', data.error || 'Bilinmeyen bir hata oluştu.');
             }
         } catch (error)
         {
@@ -62,8 +54,6 @@ const RegisterScreen = ({ navigation }) =>
             Alert.alert('Kayıt Hatası', 'Sunucuya bağlanılamadı.');
         }
     };
-
-
 
     return (
         <KeyboardAvoidingView style={styles.authContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
